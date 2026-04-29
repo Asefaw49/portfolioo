@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NovaRegister | Smart Student Registration</title>
+    <!-- Google Fonts + Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0b1120, #070c18);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        /* animated background orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            opacity: 0.5;
+            animation: drift 20s infinite alternate;
+        }
+
+        .orb1 { width: 50vw; height: 50vw; background: #3b3bff; top: -20vh; left: -15vw; }
+        .orb2 { width: 40vw; height: 40vw; background: #b44eff; bottom: -15vh; right: -10vw; animation-duration: 25s; }
+        .orb3 { width: 30vw; height: 30vw; background: #00b8ff; top: 35vh; right: 20vw; filter: blur(90px); opacity: 0.35; }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1);}
+            100% { transform: translate(5%, 8%) scale(1.08);}
+        }
+
+        /* main card */
+        .register-container {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .glass-card {
+            background: rgba(15, 25, 45, 0.55);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+            padding: 2rem 2rem 2.2rem;
+            transition: all 0.3s;
+        }
+
+        /* header */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .icon-badge {
+            background: linear-gradient(135deg, #3b82f6, #c084fc);
+            width: 64px;
+            height: 64px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 10px 20px -5px rgba(59,130,246,0.4);
+        }
+        .icon-badge i {
+            font-size: 2rem;
+            color: white;
+        }
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #b9d0ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .subhead {
+            color: #9aa9d4;
+            margin-top: 0.4rem;
+        }
+        .login-redirect {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .login-redirect a {
+            color: #b5cbff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .login-redirect a:hover {
+            text-decoration: underline;
+            color: white;
+        }
+
+        /* form grid layout - modern two columns for larger screens */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 1.5rem;
+        }
+        .full-width {
+            grid-column: span 2;
+        }
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .input-field label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            color: #ccd6ff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .input-field label i {
+            font-size: 0.8rem;
+            color: #7e8fc7;
+        }
+        .input-field input, .input-field select, .input-field textarea {
+            background: rgba(8, 14, 26, 0.7);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 1.2rem;
+            padding: 0.7rem 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #f0f3ff;
+            transition: all 0.2s;
+            outline: none;
+        }
+        .input-field input:focus, .input-field select:focus, .input-field textarea:focus {
+            border-color: #6b8eff;
+            box-shadow: 0 0 0 3px rgba(107, 142, 255, 0.3);
+            background: rgba(12, 20, 36, 0.9);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+        /* radio & checkbox groups */
+        .radio-group {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(8, 14, 26, 0.5);
+            padding: 0.5rem 0.8rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #dfe6ff;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            accent-color: #5f7ef2;
+            width: 16px;
+            height: 16px;
+            margin: 0;
+        }
+        .file-zone {
+            background: rgba(0,0,0,0.3);
+            border: 1px dashed #6b8eff;
+            border-radius: 1.2rem;
+            padding: 0.4rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #b9c8ff;
+        }
+        .file-zone input {
+            background: transparent;
+            border: none;
+            padding: 0.3rem 0;
+            color: white;
+        }
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(95deg, #4361ee, #9c6ee7);
+            border: none;
+            border-radius: 2rem;
+            padding: 0.9rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+            box-shadow: 0 8px 18px rgba(67,97,238,0.3);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.02);
+            box-shadow: 0 12px 22px -6px #4361ee;
+        }
+        .field-error {
+            font-size: 0.7rem;
+            color: #ffaeae;
+            margin-top: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .success-toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f212ed9;
+            backdrop-filter: blur(12px);
+            border-left: 4px solid #3eff9e;
+            padding: 0.8rem 1.6rem;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            transition: all 0.2s;
+            font-family: monospace;
+        }
+
+        @media (max-width: 680px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .glass-card {
+                padding: 1.5rem;
+            }
+            .radio-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* password strength hint (extra) */
+        .strength-hint {
+            font-size: 0.7rem;
+            margin-top: 0.2rem;
+            color: #b1bef0;
+        }
+        small i {
+            margin-right: 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="bg-orb orb3"></div>
+
+<div class="register-container">
+    <div class="glass-card">
+        <div class="brand-header">
+            <div class="icon-badge">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1>Student Registration</h1>
+            <p class="subhead">Create your academic profile</p>
+            <div class="login-redirect">
+                Already have an account? <a href="#" id="loginRedirectLink"><i class="fas fa-arrow-right-to-bracket"></i> Login Here</a>
+            </div>
+        </div>
+
+        <form id="studentRegForm" action="#" method="post" enctype="multipart/form-data">
+            <div class="form-grid">
+                <!-- First Name -->
+                <div class="input-field">
+                    <label><i class="fas fa-user"></i> First Name *</label>
+                    <input type="text" name="firstname" id="firstname" placeholder="John" required>
+                    <div class="field-error" id="firstnameError"></div>
+                </div>
+                <!-- Last Name -->
+                <div class="input-field">
+                    <label><i class="fas fa-user"></i> Last Name *</label>
+                    <input type="text" name="lastname" id="lastname" placeholder="Doe" required>
+                    <div class="field-error" id="lastnameError"></div>
+                </div>
+                <!-- DOB -->
+                <div class="input-field">
+                    <label><i class="fas fa-calendar-alt"></i> Date of Birth *</label>
+                    <input type="date" name="dob" id="dob" required>
+                    <div class="field-error" id="dobError"></div>
+                </div>
+                <!-- Gender -->
+                <div class="input-field">
+                    <label><i class="fas fa-venus-mars"></i> Gender *</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="Male"> Male</label>
+                        <label><input type="radio" name="gender" value="Female"> Female</label>
+                        <label><input type="radio" name="gender" value="Other"> Other</label>
+                    </div>
+                    <div class="field-error" id="genderError"></div>
+                </div>
+                <!-- Email -->
+                <div class="input-field">
+                    <label><i class="fas fa-envelope"></i> Email *</label>
+                    <input type="email" name="email" id="email" placeholder="student@example.com" required>
+                    <div class="field-error" id="emailError"></div>
+                </div>
+                <!-- Phone -->
+                <div class="input-field">
+                    <label><i class="fas fa-phone-alt"></i> Phone *</label>
+                    <input type="tel" name="phone" id="phone" placeholder="+1234567890" required>
+                    <div class="field-error" id="phoneError"></div>
+                </div>
+                <!-- Address (full width) -->
+                <div class="input-field full-width">
+                    <label><i class="fas fa-map-marker-alt"></i> Address</label>
+                    <textarea name="address" id="address" placeholder="Street, City, Postal Code"></textarea>
+                </div>
+                <!-- Course -->
+                <div class="input-field">
+                    <label><i class="fas fa-book"></i> Course *</label>
+                    <select name="course" id="course" required>
+                        <option value="" disabled selected>-- Select Course --</option>
+                        <option>Information Technology (IT)</option>
+                        <option>Computer Science (CS)</option>
+                        <option>Software Engineering (SE)</option>
+                        <option>Data Science (DS)</option>
+                        <option>Cybersecurity (CY)</option>
+                    </select>
+                    <div class="field-error" id="courseError"></div>
+                </div>
+                <!-- Hobbies (checkbox) -->
+                <div class="input-field">
+                    <label><i class="fas fa-heart"></i> Hobbies</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="hobby[]" value="Reading"> Reading</label>
+                        <label><input type="checkbox" name="hobby[]" value="Sports"> Sports</label>
+                        <label><input type="checkbox" name="hobby[]" value="Music"> Music</label>
+                        <label><input type="checkbox" name="hobby[]" value="Gaming"> Gaming</label>
+                        <label><input type="checkbox" name="hobby[]" value="Coding"> Coding</label>
+                    </div>
+                </div>
+                <!-- Photo Upload -->
+                <div class="input-field">
+                    <label><i class="fas fa-camera"></i> Profile Photo</label>
+                    <div class="file-zone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <input type="file" name="photo" id="photo" accept="image/*">
+                    </div>
+                    <div class="field-error" id="photoError"></div>
+                </div>
+                <!-- Username -->
+                <div class="input-field">
+                    <label><i class="fas fa-user-circle"></i> Username *</label>
+                    <input type="text" name="username" id="username" placeholder="unique_handle" required>
+                    <div class="field-error" id="usernameError"></div>
+                </div>
+                <!-- Password + strength -->
+                <div class="input-field">
+                    <label><i class="fas fa-lock"></i> Password *</label>
+                    <input type="password" name="password" id="password" placeholder="••••••••" required>
+                    <div class="strength-hint" id="passwordStrength"><i class="fas fa-shield-alt"></i> Use 6+ chars</div>
+                    <div class="field-error" id="passwordError"></div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit"><i class="fas fa-user-plus"></i> Register Student</button>
+        </form>
+    </div>
+</div>
+
+<!-- custom toast notification -->
+<div id="liveToast" style="display: none;" class="success-toast"></div>
+
+<script>
+    (function() {
+        // DOM elements
+        const form = document.getElementById('studentRegForm');
+        const firstname = document.getElementById('firstname');
+        const lastname = document.getElementById('lastname');
+        const dob = document.getElementById('dob');
+        const genderRadios = document.querySelectorAll('input[name="gender"]');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const course = document.getElementById('course');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const photoInput = document.getElementById('photo');
+        
+        // error spans
+        const firstnameErr = document.getElementById('firstnameError');
+        const lastnameErr = document.getElementById('lastnameError');
+        const dobErr = document.getElementById('dobError');
+        const genderErr = document.getElementById('genderError');
+        const emailErr = document.getElementById('emailError');
+        const phoneErr = document.getElementById('phoneError');
+        const courseErr = document.getElementById('courseError');
+        const usernameErr = document.getElementById('usernameError');
+        const passwordErr = document.getElementById('passwordError');
+        const photoErr = document.getElementById('photoError');
+        
+        // Helper toast
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('liveToast');
+            toast.style.display = 'flex';
+            toast.style.backgroundColor = isError ? '#b91c1cd9' : '#0f212ed9';
+            toast.style.borderLeftColor = isError ? '#ff8888' : '#3eff9e';
+            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${message}`;
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3200);
+        }
+
+        // real-time validation helpers
+        function validateName(value) {
+            return value.trim().length >= 2 ? '' : 'Minimum 2 characters required';
+        }
+
+        function validateEmail(emailVal) {
+            const re = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+            if (!emailVal) return 'Email is required';
+            if (!re.test(emailVal)) return 'Enter a valid email address';
+            return '';
+        }
+
+        function validatePhone(phoneVal) {
+            const digits = phoneVal.replace(/[^\d+]/g, '');
+            if (digits.length < 8 || digits.length > 15) return 'Phone should have 8-15 digits';
+            return '';
+        }
+
+        function getSelectedGender() {
+            for(let radio of genderRadios) {
+                if(radio.checked) return radio.value;
+            }
+            return '';
+        }
+
+        function checkPasswordStrength(pw) {
+            if(pw.length === 0) return '';
+            if(pw.length < 6) return '⚠️ Weak: at least 6 characters';
+            if(pw.length >= 8 && /[!@#$%^&*]/.test(pw)) return '✅ Strong password';
+            if(pw.length >= 6) return '👍 Medium (add special chars for strong)';
+            return '';
+        }
+
+        // update strength hint
+        if(password) {
+            password.addEventListener('input', function() {
+                const strengthDiv = document.getElementById('passwordStrength');
+                if(strengthDiv) {
+                    let msg = checkPasswordStrength(password.value);
+                    if(msg.includes('Weak')) strengthDiv.style.color = '#ffaaaa';
+                    else if(msg.includes('Strong')) strengthDiv.style.color = '#b3ffcf';
+                    else strengthDiv.style.color = '#ffde9c';
+                    if(msg === '') msg = '🔒 Enter password';
+                    strengthDiv.innerHTML = `<i class="fas fa-shield-alt"></i> ${msg}`;
+                }
+            });
+        }
+
+        // live field validation on blur (basic)
+        function attachLiveValidation() {
+            if(firstname) {
+                firstname.addEventListener('blur', () => { firstnameErr.innerText = validateName(firstname.value); });
+            }
+            if(lastname) {
+                lastname.addEventListener('blur', () => { lastnameErr.innerText = validateName(lastname.value); });
+            }
+            if(email) {
+                email.addEventListener('blur', () => { emailErr.innerText = validateEmail(email.value); });
+            }
+            if(phone) {
+                phone.addEventListener('blur', () => { phoneErr.innerText = validatePhone(phone.value); });
+            }
+            if(username) {
+                username.addEventListener('blur', () => {
+                    if(username.value.trim().length < 3) usernameErr.innerText = 'Username must be at least 3 characters';
+                    else if(username.value.includes(' ')) usernameErr.innerText = 'No spaces allowed';
+                    else usernameErr.innerText = '';
+                });
+            }
+            if(dob) {
+                dob.addEventListener('blur', () => {
+                    if(!dob.value) dobErr.innerText = 'Date of birth required';
+                    else {
+                        const birthDate = new Date(dob.value);
+                        const today = new Date();
+                        let age = today.getFullYear() - birthDate.getFullYear();
+                        const m = today.getMonth() - birthDate.getMonth();
+                        if(m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+                        if(age < 5 || age > 100) dobErr.innerText = 'Age must be between 5 and 100';
+                        else dobErr.innerText = '';
+                    }
+                });
+            }
+        }
+
+        // full validation on submit
+        function validateForm() {
+            let isValid = true;
+            // first & last
+            const firstNameValid = validateName(firstname.value);
+            if(firstNameValid) { firstnameErr.innerText = firstNameValid; isValid = false; } else firstnameErr.innerText = '';
+            
+            const lastNameValid = validateName(lastname.value);
+            if(lastNameValid) { lastnameErr.innerText = lastNameValid; isValid = false; } else lastnameErr.innerText = '';
+            
+            // email
+            const emailValid = validateEmail(email.value);
+            if(emailValid) { emailErr.innerText = emailValid; isValid = false; } else emailErr.innerText = '';
+            
+            // phone
+            const phoneValid = validatePhone(phone.value);
+            if(phoneValid) { phoneErr.innerText = phoneValid; isValid = false; } else phoneErr.innerText = '';
+            
+            // dob
+            if(!dob.value) { dobErr.innerText = 'Date of birth required'; isValid = false; }
+            else {
+                const birthDate = new Date(dob.value);
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if(m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+                if(age < 5 || age > 100) { dobErr.innerText = 'Invalid age (5-100 years)'; isValid = false; }
+                else dobErr.innerText = '';
+            }
+            
+            // gender
+            if(!getSelectedGender()) { genderErr.innerText = 'Please select gender'; isValid = false; } else genderErr.innerText = '';
+            
+            // course
+            if(!course.value) { courseErr.innerText = 'Choose a course'; isValid = false; } else courseErr.innerText = '';
+            
+            // username
+            if(username.value.trim().length < 3) { usernameErr.innerText = 'Username min 3 characters'; isValid = false; }
+            else if(username.value.includes(' ')) { usernameErr.innerText = 'No spaces allowed'; isValid = false; }
+            else usernameErr.innerText = '';
+            
+            // password
+            if(password.value.length < 6) { passwordErr.innerText = 'Password must be at least 6 characters'; isValid = false; }
+            else passwordErr.innerText = '';
+            
+            // photo optional - but if file is too large? nice extra
+            if(photoInput.files.length > 0) {
+                const file = photoInput.files[0];
+                const maxSize = 2 * 1024 * 1024;
+                if(file.size > maxSize) {
+                    photoErr.innerText = 'Photo max 2MB';
+                    isValid = false;
+                } else photoErr.innerText = '';
+            } else {
+                photoErr.innerText = ''; // optional
+            }
+            return isValid;
+        }
+
+        // simulate submit & show success data preview
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            if(!validateForm()) {
+                showToast('Please fix the errors in the form', true);
+                return;
+            }
+            
+            // collect hobbies
+            const hobbyCheckboxes = document.querySelectorAll('input[name="hobby[]"]:checked');
+            const hobbies = Array.from(hobbyCheckboxes).map(cb => cb.value).join(', ') || 'None';
+            const genderVal = getSelectedGender();
+            const photoFile = photoInput.files[0];
+            const photoName = photoFile ? photoFile.name : 'Not uploaded';
+            
+            // build display message
+            const message = `🎓 Registration Successful!\n\nWelcome ${firstname.value} ${lastname.value}\n📧 ${email.value}\n📞 ${phone.value}\n🎂 DOB: ${dob.value} | Gender: ${genderVal}\n📚 Course: ${course.value}\n🏷️ Username: ${username.value}\n❤️ Hobbies: ${hobbies}\n🖼️ Photo: ${photoName}\n✅ Account ready! (demo mode)`;
+            
+            // custom modern toast with details (compact but informative)
+            showToast(`✨ Registered ${firstname.value} ${lastname.value} as student! ✨`, false);
+            // also console log for rich data
+            console.log(message);
+            // optional: show alert but using nice toast, we can also show extra modal but we keep UI clean.
+            setTimeout(() => {
+                showToast(`📋 Course: ${course.value} | Username: ${username.value}`, false);
+            }, 1300);
+            
+            // optional reset after successful demo? no reset to keep data preview but we can optionally disable? not needed.
+            // uncomment next line if you want to reset after 2 sec (but maybe annoying) – we don't.
+        }
+        
+        // redirect link demo
+        const loginLink = document.getElementById('loginRedirectLink');
+        if(loginLink) {
+            loginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('🔐 Redirect to login page (simulated) — would navigate to index.html', false);
+                // you can adjust window.location if you have actual login page: window.location.href="index.html";
+            });
+        }
+        
+        attachLiveValidation();
+        form.addEventListener('submit', handleFormSubmit);
+        
+        // extra eye candy: gender error clear on selection
+        genderRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if(getSelectedGender()) genderErr.innerText = '';
+            });
+        });
+        course.addEventListener('change', () => { if(course.value) courseErr.innerText = ''; });
+    })();
+</script>
+</body>
+</html>
