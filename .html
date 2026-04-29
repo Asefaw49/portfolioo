@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Printer Troubleshooting Flowchart</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    text-align: center;
+}
+
+h2 {
+    margin: 20px;
+}
+
+.flowchart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box {
+    background: #ffffff;
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    padding: 15px 25px;
+    margin: 10px;
+    width: 280px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.decision {
+    border: 2px solid #e67e22;
+    border-radius: 50px;
+}
+
+.end {
+    border: 2px solid #2ecc71;
+}
+
+.arrow {
+    font-size: 24px;
+    margin: -5px;
+    color: #555;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+</style>
+</head>
+<body>
+
+<h2>🖨️ Printer Troubleshooting Flowchart</h2>
+
+<div class="flowchart">
+
+<div class="box">Start: Printer Problem</div>
+<div class="arrow">↓</div>
+
+<div class="box decision">Is the printer powered ON?</div>
+<div class="row">
+    <div>
+        <div class="arrow">Yes ↓</div>
+        <div class="box">Check cables & connections</div>
+    </div>
+    <div>
+        <div class="arrow">No ↓</div>
+        <div class="box">Turn ON printer</div>
+    </div>
+</div>
+
+<div class="arrow">↓</div>
+<div class="box decision">Any error message?</div>
+
+<div class="row">
+    <div>
+        <div class="arrow">Yes ↓</div>
+        <div class="box">Fix error (paper jam, low ink)</div>
+    </div>
+    <div>
+        <div class="arrow">No ↓</div>
+        <div class="box">Check paper & toner</div>
+    </div>
+</div>
+
+<div class="arrow">↓</div>
+<div class="box">Print test page</div>
+
+<div class="row">
+    <div>
+        <div class="arrow">Works ↓</div>
+        <div class="box end">DONE ✅</div>
+    </div>
+    <div>
+        <div class="arrow">Not Working ↓</div>
+        <div class="box">Check printer queue</div>
+    </div>
+</div>
+
+<div class="arrow">↓</div>
+<div class="box">Restart printer & computer</div>
+
+<div class="arrow">↓</div>
+<div class="box decision">Network printer?</div>
+
+<div class="row">
+    <div>
+        <div class="arrow">Yes ↓</div>
+        <div class="box">Check IP & connection</div>
+        <div class="arrow">↓</div>
+        <div class="box">Reconnect to network</div>
+    </div>
+    <div>
+        <div class="arrow">No ↓</div>
+        <div class="box">Reinstall driver</div>
+    </div>
+</div>
+
+<div class="arrow">↓</div>
+<div class="box">Test print again</div>
+
+<div class="arrow">↓</div>
+<div class="box decision">Still not working?</div>
+
+<div class="arrow">Yes ↓</div>
+<div class="box end">Call IT / Technician</div>
+
+</div>
+
+</body>
+</html>
