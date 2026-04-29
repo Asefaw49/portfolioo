@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Nova | Modern Login Experience</title>
+  <!-- Google Fonts + simple reset -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #0a0f1e 0%, #0c1222 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* animated glass orbs background */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      z-index: 0;
+      animation: floatOrb 18s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+      width: 55vw;
+      height: 55vw;
+      background: radial-gradient(circle, rgba(0, 255, 255, 0.5), rgba(0, 100, 255, 0.2));
+      top: -20vh;
+      left: -15vw;
+    }
+
+    .orb-2 {
+      width: 45vw;
+      height: 45vw;
+      background: radial-gradient(circle, rgba(255, 100, 200, 0.4), rgba(150, 0, 255, 0.2));
+      bottom: -15vh;
+      right: -10vw;
+      animation-duration: 22s;
+    }
+
+    .orb-3 {
+      width: 35vw;
+      height: 35vw;
+      background: radial-gradient(circle, rgba(255, 200, 100, 0.3), rgba(255, 80, 120, 0.15));
+      top: 40vh;
+      right: 20vw;
+      animation-duration: 25s;
+      filter: blur(100px);
+    }
+
+    @keyframes floatOrb {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(4%, 6%) scale(1.05);
+      }
+    }
+
+    /* main card container */
+    .login-wrapper {
+      width: 100%;
+      max-width: 1280px;
+      margin: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* glassmorphic card */
+    .glass-card {
+      background: rgba(18, 25, 45, 0.5);
+      backdrop-filter: blur(14px);
+      border-radius: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      width: 100%;
+      max-width: 480px;
+      padding: 2.2rem 2rem 2.7rem;
+      transition: all 0.3s ease;
+    }
+
+    /* brand area */
+    .brand {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo-circle {
+      background: linear-gradient(135deg, #3b82f6, #a855f7);
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .logo-circle i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .brand h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(120deg, #ffffff, #cbd5ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .brand p {
+      color: #9ca3cf;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      font-weight: 400;
+    }
+
+    /* input group modern */
+    .input-group {
+      margin-bottom: 1.4rem;
+      position: relative;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8b9bcf;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+      pointer-events: none;
+    }
+
+    .input-group input {
+      width: 100%;
+      background: rgba(12, 18, 34, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 2rem;
+      padding: 0.9rem 1rem 0.9rem 2.8rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #f0f3ff;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.25s ease;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: #6c8eff;
+      background: rgba(18, 28, 50, 0.8);
+      box-shadow: 0 0 0 3px rgba(108, 142, 255, 0.2);
+    }
+
+    .input-group input::placeholder {
+      color: #5e6e9e;
+      font-weight: 400;
+    }
+
+    /* password toggle (optional eye) */
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: #8b9bcf;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: color 0.2s;
+      z-index: 5;
+    }
+
+    .toggle-password:hover {
+      color: #cddcff;
+    }
+
+    /* options row */
+    .options-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 0 1.8rem;
+      font-size: 0.85rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #b9c3ec;
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      accent-color: #5f7ef2;
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      color: #9bb3ff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .forgot-link:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    /* CTA button */
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(95deg, #4361ee, #9c6ee7);
+      border: none;
+      border-radius: 3rem;
+      padding: 0.9rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+      letter-spacing: 0.3px;
+      margin-bottom: 1.8rem;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px -8px rgba(67, 97, 238, 0.5);
+      background: linear-gradient(95deg, #3b55db, #8b5be0);
+    }
+
+    /* divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #6e7ea8;
+      font-size: 0.75rem;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* social icons */
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-icon {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cddcff;
+      font-size: 1.4rem;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      transform: scale(1.05);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* signup link */
+    .signup-prompt {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #b3c0e6;
+    }
+
+    .signup-prompt a {
+      color: #b5ccff;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 0.4rem;
+    }
+
+    .signup-prompt a:hover {
+      text-decoration: underline;
+      color: white;
+    }
+
+    /* micro interaction + mobile optimization */
+    @media (max-width: 550px) {
+      .glass-card {
+        padding: 1.8rem 1.3rem 2rem;
+      }
+
+      .brand h1 {
+        font-size: 1.6rem;
+      }
+
+      .options-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+
+      .login-wrapper {
+        margin: 1rem;
+      }
+    }
+
+    /* toast / demo alert placeholder */
+    .demo-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293bbb;
+      backdrop-filter: blur(12px);
+      padding: 0.6rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      color: #e2e8ff;
+      border: 1px solid rgba(255,255,240,0.2);
+      pointer-events: none;
+      z-index: 999;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 500px) {
+      .demo-toast {
+        font-size: 0.7rem;
+        white-space: normal;
+        text-align: center;
+        width: 90%;
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="login-wrapper">
+  <div class="glass-card">
+    <div class="brand">
+      <div class="logo-circle">
+        <i class="fas fa-bolt"></i>
+      </div>
+      <h1>Welcome back</h1>
+      <p>Sign in to your account</p>
+    </div>
+
+    <form id="loginForm" action="#" method="POST">
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="email" name="email" placeholder="Email address" autocomplete="email" required>
+      </div>
+
+      <div class="input-group password-wrapper">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" required>
+        <button type="button" class="toggle-password" id="togglePwdBtn" aria-label="Show password">
+          <i class="far fa-eye-slash"></i>
+        </button>
+      </div>
+
+      <div class="options-row">
+        <label class="checkbox-label">
+          <input type="checkbox" id="rememberCheck"> <span>Remember me</span>
+        </label>
+        <a href="#" class="forgot-link" id="forgotLink">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="login-btn">Sign in <i class="fas fa-arrow-right" style="margin-left: 6px; font-size: 0.85rem;"></i></button>
+    </form>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span>or continue with</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="social-buttons">
+      <a href="#" class="social-icon" id="googleBtn"><i class="fab fa-google"></i></a>
+      <a href="#" class="social-icon" id="githubBtn"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-icon" id="appleBtn"><i class="fab fa-apple"></i></a>
+    </div>
+
+    <div class="signup-prompt">
+      Don't have an account? <a href="#" id="signupLink">Create account</a>
+    </div>
+  </div>
+</div>
+
+<div class="demo-toast" id="demoToast">
+  ✨ Demo mode — no actual authentication
+</div>
+
+<script>
+  (function() {
+    // DOM elements
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginForm = document.getElementById('loginForm');
+    const toggleBtn = document.getElementById('togglePwdBtn');
+    const toggleIcon = toggleBtn.querySelector('i');
+    const toastEl = document.getElementById('demoToast');
+
+    // Helper: show temporary toast message (override default msg on submit)
+    function showMessage(text, isError = false) {
+      const originalText = toastEl.innerText;
+      toastEl.style.transition = 'opacity 0.2s';
+      toastEl.style.backgroundColor = isError ? '#941b2cbb' : '#1e293bbb';
+      toastEl.innerText = text;
+      toastEl.style.opacity = '1';
+      setTimeout(() => {
+        toastEl.style.backgroundColor = '#1e293bbb';
+        toastEl.innerText = originalText;
+      }, 2800);
+    }
+
+    // Toggle password visibility
+    if (toggleBtn && passwordInput) {
+      toggleBtn.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        if (type === 'text') {
+          toggleIcon.classList.remove('fa-eye-slash');
+          toggleIcon.classList.add('fa-eye');
+        } else {
+          toggleIcon.classList.remove('fa-eye');
+          toggleIcon.classList.add('fa-eye-slash');
+        }
+      });
+    }
+
+    // Simulated login handler (modern + validation)
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      // Basic frontend validation (friendly)
+      if (!email) {
+        showMessage('Please enter your email address', true);
+        emailInput.focus();
+        return;
+      }
+      if (!password) {
+        showMessage('Password field cannot be empty', true);
+        passwordInput.focus();
+        return;
+      }
+      // Simple email format check
+      const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        showMessage('Enter a valid email (e.g., name@example.com)', true);
+        emailInput.focus();
+        return;
+      }
+      if (password.length < 4) {
+        showMessage('Password must be at least 4 characters (demo)', true);
+        passwordInput.focus();
+        return;
+      }
+
+      // success simulation — modern feedback 
+      const rememberChecked = document.getElementById('rememberCheck').checked;
+      console.log(`Login attempt with email: ${email}, remember me: ${rememberChecked}`);
+      
+      // Store demo visual feedback (no actual backend)
+      showMessage(`✓ Welcome back, ${email.split('@')[0]}! (demo login successful)`);
+      
+      // Optional: you could reset form or redirect, but we just give positive feedback.
+      // For demonstration, we flash a success and keep the form.
+      // You could simulate a redirect or console log.
+      // For better UX: briefly change button text
+      const loginBtn = document.querySelector('.login-btn');
+      const originalBtnText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i>  Accessing...';
+      setTimeout(() => {
+        loginBtn.innerHTML = originalBtnText;
+        // after success simulation, also show nice notification
+        // we can also optionally reset password field? not needed.
+        // but make it clear it’s a demo.
+        setTimeout(() => {
+          showMessage('✨ Demo: authentication would proceed here ✨');
+        }, 700);
+      }, 800);
+    }
+
+    // Attach event to login form
+    if (loginForm) {
+      loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // additional interactive elements (forgot, signup, social demo)
+    const forgotLink = document.getElementById('forgotLink');
+    if (forgotLink) {
+      forgotLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showMessage('📧 Password reset link would be sent (demo feature)');
+      });
+    }
+
+    const signupLink = document.getElementById('signupLink');
+    if (signupLink) {
+      signupLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showMessage('🚀 Join Nova — sign-up flow would open (demo)');
+      });
+    }
+
+    // social buttons demo (prevent navigation)
+    const googleSocial = document.getElementById('googleBtn');
+    const githubSocial = document.getElementById('githubBtn');
+    const appleSocial = document.getElementById('appleBtn');
+
+    function socialDemo(platform) {
+      showMessage(`🔐 ${platform} authentication is simulated (demo environment)`);
+    }
+
+    if (googleSocial) {
+      googleSocial.addEventListener('click', (e) => {
+        e.preventDefault();
+        socialDemo('Google');
+      });
+    }
+    if (githubSocial) {
+      githubSocial.addEventListener('click', (e) => {
+        e.preventDefault();
+        socialDemo('GitHub');
+      });
+    }
+    if (appleSocial) {
+      appleSocial.addEventListener('click', (e) => {
+        e.preventDefault();
+        socialDemo('Apple');
+      });
+    }
+
+    // extra: if user clicks on toast? not needed. automatic disappearance handled.
+    // also prevent accidental unfocus highlights
+    const allIcons = document.querySelectorAll('.social-icon, .forgot-link, #signupLink');
+    allIcons.forEach(el => {
+      if (el && el.getAttribute('href') === '#') {
+        // already handled per element, but ensure consistency
+      }
+    });
+
+  })();
+</script>
+</body>
+</html>
